@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WebStoreUIApp"
+             x:Class="WebStoreUIApp.MainPage"
+             x:Name="This">
+    
+    <ContentPage.Resources>
+        <Style x:Key="IconBtn" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Coral" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        
+        <Style x:Key="IconBtnText" BasedOn="{StaticResource IconBtn}" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="ContentLayout" Value="Left" />
+        </Style>
+        
+        <Style x:Key="ProductLabel" TargetType="Label">
+            <Setter Property="TextColor" Value="Coral" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.BindingContext>
+        <x:Reference Name="This" />
+    </ContentPage.BindingContext>
+    
+    <StackLayout BackgroundColor="Coral" Spacing="0">
+
+        <Grid RowSpacing="0" ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            
+            <Button Style="{StaticResource IconBtn}"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    ImageSource="arrow_back.png" />
+            
+            <Label Grid.Column="1"
+                   Grid.Row="0"
+                   Text="accessories"
+                   FontSize="24"
+                   TextColor="White"
+                   VerticalOptions="Center" />
+        
+            <Button Style="{StaticResource IconBtn}"
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    ImageSource="search.png" x:Name="TestBtn" />
+            
+            
+            <Button Style="{StaticResource IconBtn}"
+                    Grid.Column="3"
+                    Grid.Row="0"
+                    ImageSource="three_dots.png" />
+        </Grid>
+        
+        <Grid BackgroundColor="White" RowSpacing="0" ColumnSpacing="0" >
+                
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+                
+            <Button Grid.Column="0"
+                    Style="{StaticResource IconBtnText}"
+                    Text="Sort by"
+                    ImageSource="arrow_swap.png" />
+                
+            <BoxView Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="1" Color="Black" />
+                
+            <Button Grid.Column="2"
+                    Style="{StaticResource IconBtnText}"
+                    Text="Filter"
+                    ImageSource="filter.png" />
+                
+            <BoxView Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="1" Color="Black" />
+                
+            <Button Grid.Column="4"
+                    Style="{StaticResource IconBtnText}"
+                    ImageSource="grid.png" />
+                
+        </Grid>
+        
+        <BoxView HeightRequest="1" BackgroundColor="Black" />
+        
+        <ListView x:Name="ProductsList"
+                  ItemsSource="{Binding ProductPairs}"
+                  HasUnevenRows="True"
+                  BackgroundColor="LightGray"
+                  SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        
+                        <Grid>
+                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Grid Grid.Column="0">
+                                
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
+                                <Frame Grid.Row="0" Margin="6, 6, 2, 0">
+                                    <Image Source="{Binding Item1.ImagePath}"
+                                           HeightRequest="100"
+                                           WidthRequest="100" />
+                                </Frame>
+                                <Frame Grid.Row="1" Margin="6, 0, 2, 6">
+                                    <StackLayout>
+                                        <Label Style="{StaticResource ProductLabel}" Text="{Binding Item1.Name}" />
+                                        <Label Text="{Binding Item1.Price}" />
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                            
+                            <Grid Grid.Column="1">
+                                
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
+                                <Frame Grid.Row="0" Margin="6, 6, 2, 0">
+                                    <Image Source="{Binding Item2.ImagePath}"
+                                           HeightRequest="100"
+                                           WidthRequest="100" />
+                                </Frame>
+                                <Frame Grid.Row="1" Margin="6, 0, 2, 6">
+                                    <StackLayout>
+                                        <Label Style="{StaticResource ProductLabel}" Text="{Binding Item2.Name}" />
+                                        <Label Text="{Binding Item2.Price}" />
+                                    </StackLayout>
+                                </Frame>
+                                
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid"
+                                                 Binding="{Binding Item2.Price}"
+                                                 Value="0">
+                                        <Setter Property="Grid.IsVisible" Value="False"></Setter>
+                                    </DataTrigger>
+                                </Grid.Triggers>
+                                
+                            </Grid>
+                            
+                        </Grid>
+                        
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        <!-- <ScrollView BackgroundColor="LightGray" VerticalOptions="FillAndExpand"> -->
+        <!--     <Grid> -->
+        <!--         <Grid.ColumnDefinitions> -->
+        <!--             <ColumnDefinition /> -->
+        <!--             <ColumnDefinition /> -->
+        <!--         </Grid.ColumnDefinitions> -->
+        <!-- -->
+        <!--         <StackLayout Grid.Column="0" Grid.Row="0"> -->
+        <!--             <Frame Margin="6, 6, 2, 0"> -->
+        <!--                 <Image Source="Images/belt.png" /> -->
+        <!--             </Frame> -->
+        <!--             <Frame Margin="6, 0, 2, 6"> -->
+        <!--                 <StackLayout> -->
+        <!--                     <Label Style="{StaticResource ProductLabel}">Belt - Size "DAMN"</Label> -->
+        <!--                     <Label>$999.00</Label> -->
+        <!--                 </StackLayout> -->
+        <!--             </Frame> -->
+        <!--         </StackLayout> -->
+        <!-- -->
+        <!--         <StackLayout Grid.Column="1" Grid.Row="0"> -->
+        <!--             <Frame Margin="2, 6, 6, 0"> -->
+        <!--                 <Image Source="Images/belt.png" /> -->
+        <!--             </Frame> -->
+        <!--             <Frame Margin="2, 0, 6, 6"> -->
+        <!--                 <StackLayout> -->
+        <!--                     <Label Style="{StaticResource ProductLabel}">Belt - Size "DAMN"</Label> -->
+        <!--                     <Label>$999.00</Label> -->
+        <!--                 </StackLayout> -->
+        <!--             </Frame> -->
+        <!--         </StackLayout> -->
+        <!-- -->
+        <!--         <StackLayout Grid.Column="0" Grid.Row="1"> -->
+        <!--             <Frame Margin="6, 6, 2, 0"> -->
+        <!--                 <Image Source="Images/belt.png" /> -->
+        <!--             </Frame> -->
+        <!--             <Frame Margin="6, 0, 2, 6"> -->
+        <!--                 <StackLayout> -->
+        <!--                     <Label Style="{StaticResource ProductLabel}">Belt - Size "DAMN"</Label> -->
+        <!--                     <Label>$999.00</Label> -->
+        <!--                 </StackLayout> -->
+        <!--             </Frame> -->
+        <!--         </StackLayout> -->
+        <!-- -->
+        <!--     </Grid> -->
+        <!-- </ScrollView> -->
+
+    </StackLayout>
+
+</ContentPage>
